@@ -21,7 +21,7 @@ int main(int argc, char** argv){
     glutInitWindowPosition(x, y);
     int win = glutCreateWindow("Tutorial 01");
     printf("uhg: %d\n", win);
-    GLclampf Red = 0.0f, Green = 0.0f, Blue = 0.0f, Alpha = 0.0f;
+    GLclampf Red = 1.0f, Green = 0.0f, Blue = 0.0f, Alpha = 0.0f;
     glClearColor(Red, Green, Blue, Alpha);
     glutDisplayFunc(RenderSceneCB);
     glutMainLoop();
