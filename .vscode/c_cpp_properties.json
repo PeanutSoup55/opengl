@@ -4,6 +4,7 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
+                "/home/eric/ogldev/Include/",
                 "/usr/include"
             ],
             "defines": [],

@@ -8,12 +8,14 @@
             "args": [
                 "-fdiagnostics-color=always",
                 "-g",
+                "-I${workspaceFolder}/ogldev/Include",
                 "${file}",
                 "-o",
                 "${fileDirname}/${fileBasenameNoExtension}",
                 "-lglut",
                 "-lGL",
-                "-lGLU"
+                "-lGLU",
+                "-lGLEW"
             ],
             "options": {
                 "cwd": "${fileDirname}"
