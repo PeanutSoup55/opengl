@@ -1,5 +1,5 @@
-#ifndef SHADER_H;
-#define SHADER_H;
+#ifndef SHADER_H
+#define SHADER_H
 
 #include <glad/gl.h>
 #include <string>
@@ -40,16 +40,57 @@ public:
             std::cerr << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ" << e.what() <<  '\n';
         }
 
-        
+        const char* vShaderCode = vertexCode.c_str();
+        const char* fShaderCode = fragmentCode.c_str();
+
+        unsigned int vertex, fragment;
+        int success;
+        char infoLog[512];
+        // vertex Shader
+        vertex = glCreateShader(GL_VERTEX_SHADER);
+        glShaderSource(vertex, 1, &vShaderCode, NULL);
+        glCompileShader(vertex);
+        // print compile errors if any
+        glGetShaderiv(vertex, GL_COMPILE_STATUS, &success);
+        if(!success)
+        {
+            glGetShaderInfoLog(vertex, 512, NULL, infoLog);
+            std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" <<
+            infoLog << std::endl;
+        };
+
+        id = glCreateProgram();
+        glAttachShader(id, vertex);
+        glAttachShader(id, fragment);
+        glLinkProgram(id);
+        // print linking errors if any
+        glGetProgramiv(id, GL_LINK_STATUS, &success);
+        if(!success)
+        {
+            glGetProgramInfoLog(id, 512, NULL, infoLog);
+            std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" <<
+            infoLog << std::endl;
+        }
+        // delete shaders; they’re linked into our program and no longer necessary
+        glDeleteShader(vertex);
+        glDeleteShader(fragment);
         
     }
 
     //use or activate shader
-    void use();
+    void use(){
+        glUseProgram(id);
+    }
     //utility funcs
-    void setBool(const std::string &name, bool value) const;
-    void setInt(const std::string &name, int value) const;
-    void setFloat(const std::string &name, float value) const;
+    void setBool(const std::string &name, bool value) const{
+        glUniform1i(glGetUniformLocation(id, name.c_str()), (int)value);
+    }
+    void setInt(const std::string &name, int value) const{
+        glUniform1i(glGetUniformLocation(id, name.c_str()), value);
+    }
+    void setFloat(const std::string &name, float value) const{
+        glUniform1f(glGetUniformLocation(id, name.c_str()), value); 
+    }
     
 };
 
