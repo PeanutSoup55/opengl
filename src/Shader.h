@@ -59,6 +59,17 @@ public:
             infoLog << std::endl;
         };
 
+        fragment = glCreateShader(GL_FRAGMENT_SHADER);
+        glShaderSource(fragment, 1, &fShaderCode, NULL);
+        glCompileShader(fragment);
+        // print compile errors if any
+        glGetShaderiv(fragment, GL_COMPILE_STATUS, &success);
+        if(!success)
+        {
+            glGetShaderInfoLog(fragment, 512, NULL, infoLog);
+            std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog << std::endl;
+        }
+
         id = glCreateProgram();
         glAttachShader(id, vertex);
         glAttachShader(id, fragment);
