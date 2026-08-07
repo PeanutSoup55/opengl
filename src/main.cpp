@@ -60,6 +60,9 @@ int main() {
     }
 
     Shader ourShader("src/3.3.shader.vs", "src/3.3.shader.fs");
+    float offset = 0.5f;
+    
+
 
     float vertices[] = {
         // positions       // colors
@@ -103,7 +106,7 @@ int main() {
         glClear(GL_COLOR_BUFFER_BIT);
 
         ourShader.use();
-
+        ourShader.setFloat("xOffset", offset);
         glBindVertexArray(VAO);
         glDrawArrays(GL_TRIANGLES, 0, 3);
 
